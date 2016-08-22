@@ -21,8 +21,9 @@ Vagrant.configure(2) do |config|
   
 
   config.vm.provision "shell", inline: <<eos
-if ! [ -e /etc/apt/sources.list.d/saltstack-salt-trusty.list ]; then
-  sudo add-apt-repository ppa:saltstack/salt
+wget -O - https://repo.saltstack.com/apt/ubuntu/14.04/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
+if ! [ -e /etc/apt/sources.list.d/saltstack.list ]; then
+  echo "deb http://repo.saltstack.com/apt/ubuntu/14.04/amd64/latest trusty main" > /etc/apt/sources.list.d/saltstack.list
 fi
 sudo apt-get update
 if ! dpkg -i language-pack-en > /dev/null 2>&1 ; then
